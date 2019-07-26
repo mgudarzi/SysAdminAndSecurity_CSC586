@@ -2,7 +2,7 @@
 
 sudo apt update
 
-cat <<EOF >> /users/mg920115/ldapAutomate/ldap-auth-config.debsetting
+cat <<EOF >> /users/mg920115/.ldapAutomate/ldap-auth-config.debsetting
 ldap_auth_config  ldap_auth_config/bindpw password admin
 ldap_auth_config  ldap_auth_config/rootbindpw password
 ldap_auth_config  ldap_auth_config/ldapns/ldap-server string ldap://192.168.1.1
@@ -19,7 +19,7 @@ ldap_auth_config  ldap_auth_config/ldapns/base-dn string dc=clemson,dc=cloudlab,
 EOF
 
 export DEBIAN_FRONTEND=noninteractive
-cat /users/mg920115/ldapAutomate/ldap-auth-config.debsetting | sudo debconf-set-selections
+cat /users/mg920115/.ldapAutomate/ldap-auth-config.debsetting | sudo debconf-set-selections
 sudo apt install -y libnss-ldap libpam-ldap ldap-utils
 
 
