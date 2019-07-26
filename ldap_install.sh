@@ -2,8 +2,7 @@
 
 sudo apt update
 cd
-
-cat > ~/debconf-slapd.conf << ‘EOF’
+cat <<EOF >> ~/debconf-slapd.conf 
 slapd slapd/password1 password admin
 slapd slapd/internal/adminpw password admin
 slapd slapd/internal/generated_adminpw password admin
@@ -15,7 +14,7 @@ slapd slapd/ppolicy_schema_needs_update select abort installation
 slapd slapd/invalid_config boolean true
 slapd slapd/move_old_database boolean false
 slapd slapd/backend select MDB
-slapd shared/organization string ETH Zurich
+slapd shared/organization string WestChesterUniversity
 slapd slapd/dump_database_destdir string /var/backups/slapd-VERSION
 slapd slapd/no_configuration boolean false
 slapd slapd/dump_database select when needed
@@ -24,9 +23,9 @@ EOF
 
 export DEBIAN_FRONTEND=noninteractive
 cat ~/debconf-slapd.conf | debconf-set-selections
-sudp apt install ldap-utils slapd -y
+sudo apt install ldap-utils slapd -y
 
-cat > ~/basedn.ldif << ‘EOF’
+cat <<EOF >> ~/basedn.ldif
 dn: ou=People,dc=clemson,dc=cloudlab,dc=us
 objectClass: organizationalUnit
 ou: People
@@ -41,4 +40,28 @@ cn: CSC586
 gidNumber: 5000
 EOF
 
+sudo ufw allow ldap
 
+ldapadd -f basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
+
+PASSHASH=$(slappasswd -s rammy)
+cat <<EOF >>~/users.ldif
+dn: uid=student,ou=People,dc=clemson,dc=cloudlab,dc=us
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: student
+sn: Ram
+givenName: Golden
+cn: student
+displayName: student
+uidNumber: 10000
+gidNumber: 5000
+userPassword: "$PASSHASH"
+gecos: Golden Ram
+loginShell: /bin/dash
+homeDirectory: /home/student
+EOF
+
+
+ldapadd -f users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
