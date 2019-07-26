@@ -22,7 +22,7 @@ slapd slapd/password_mismatch note
 EOF
 
 export DEBIAN_FRONTEND=noninteractive
-cat ~/debconf-slapd.conf | debconf-set-selections
+cat ~/debconf-slapd.conf | sudo debconf-set-selections
 sudo apt install ldap-utils slapd -y
 
 cat <<EOF >> ~/basedn.ldif
