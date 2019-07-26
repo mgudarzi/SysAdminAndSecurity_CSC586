@@ -1,7 +1,6 @@
 #!/bin/bash
 
 sudo apt update
-cd
 cat <<EOF >> debconf-slapd.conf 
 slapd slapd/password1 password admin
 slapd slapd/internal/adminpw password admin
