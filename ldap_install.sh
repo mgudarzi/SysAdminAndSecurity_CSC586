@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt update
-cat <<EOF >> debconf-slapd.conf 
+cat <<EOF >> /users/mg920115/ldapAutomate/debconf-slapd.conf 
 slapd slapd/password1 password admin
 slapd slapd/internal/adminpw password admin
 slapd slapd/internal/generated_adminpw password admin
@@ -21,10 +21,10 @@ slapd slapd/password_mismatch note
 EOF
 
 export DEBIAN_FRONTEND=noninteractive
-cat debconf-slapd.conf | sudo debconf-set-selections
+cat /users/mg920115/ldapAutomate/debconf-slapd.conf | sudo debconf-set-selections
 sudo apt install ldap-utils slapd -y
 
-cat <<EOF >> basedn.ldif
+cat <<EOF >> /users/mg920115/ldapAutomate/basedn.ldif
 dn: ou=People,dc=clemson,dc=cloudlab,dc=us
 objectClass: organizationalUnit
 ou: People
@@ -41,7 +41,7 @@ EOF
 
 
 PASSHASH=$(slappasswd -s rammy)
-cat <<EOF >> users.ldif
+cat <<EOF >> /users/mg920115/ldapAutomate/users.ldif
 dn: uid=student,ou=People,dc=clemson,dc=cloudlab,dc=us
 objectClass: inetOrgPerson
 objectClass: posixAccount
@@ -60,5 +60,5 @@ homeDirectory: /home/student
 EOF
 
 sudo ufw allow ldap
-ldapadd -f basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
-ldapadd -f users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
+ldapadd -f /users/mg920115/ldapAutomate/basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
+ldapadd -f /users/mg920115/ldapAutomate/users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
