@@ -40,9 +40,6 @@ cn: CSC586
 gidNumber: 5000
 EOF
 
-sudo ufw allow ldap
-
-ldapadd -f basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
 
 PASSHASH=$(slappasswd -s rammy)
 cat <<EOF >>~/users.ldif
@@ -63,5 +60,6 @@ loginShell: /bin/dash
 homeDirectory: /home/student
 EOF
 
-
+sudo ufw allow ldap
+ldapadd -f basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
 ldapadd -f users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
