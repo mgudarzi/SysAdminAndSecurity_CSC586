@@ -11,7 +11,7 @@ slapd slapd/purge_database boolean false
 slapd slapd/domain string clemson.cloudlab.us
 slapd slapd/ppolicy_schema_needs_update select abort installation
 slapd slapd/invalid_config boolean true
-slapd slapd/move_old_database boolean false
+slapd slapd/move_old_database boolean true
 slapd slapd/backend select MDB
 slapd shared/organization string WestChesterUniversity
 slapd slapd/dump_database_destdir string /var/backups/slapd-VERSION
