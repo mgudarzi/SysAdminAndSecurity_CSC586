@@ -1,47 +1,24 @@
 #!/bin/bash
 
+#updates the system repo database
 sudo apt update
-# mkdir /users/mg920115/.ldapAutomate
-# cat <<EOF >> /users/mg920115/.ldapAutomate/debconf-slapd.conf 
-# slapd slapd/password1 password admin
-# slapd slapd/internal/adminpw password admin
-# slapd slapd/internal/generated_adminpw password admin
-# slapd slapd/password2 password admin
-# slapd slapd/unsafe_selfwrite_acl note
-# slapd slapd/purge_database boolean false
-# slapd slapd/domain string clemson.cloudlab.us
-# slapd slapd/ppolicy_schema_needs_update select abort installation
-# slapd slapd/invalid_config boolean true
-# slapd slapd/move_old_database boolean false
-# slapd slapd/backend select MDB
-# slapd shared/organization string WestChesterUniversity
-# slapd slapd/dump_database_destdir string /var/backups/slapd-VERSION
-# slapd slapd/no_configuration boolean false
-# slapd slapd/dump_database select when needed
-# slapd slapd/password_mismatch note
-# EOF
 
+#change the fronend to noninteractive, avoiding prompts for automation
 export DEBIAN_FRONTEND=noninteractive
-cat /local/repository/slapd.debsetting | sudo debconf-set-selections
-sudo apt install ldap-utils slapd -y
-
-# cat <<EOF >> /users/mg920115/.ldapAutomate/basedn.ldif
-# dn: ou=People,dc=clemson,dc=cloudlab,dc=us
-# objectClass: organizationalUnit
-# ou: People
-
-# dn: ou=Groups,dc=clemson,dc=cloudlab,dc=us
-# objectClass: organizationalUnit
-# ou: Groups
-
-# dn: cn=CSC,ou=Groups,dc=clemson,dc=cloudlab,dc=us
-# objectClass: posixGroup
-# cn: CSC586
-# gidNumber: 5000
-# EOF
 
 
+#pre-seeding debconf with slapd.debconf file 
+cat /local/repository/slapd.debconf | sudo debconf-set-selections
+
+#installs slapd and ldap-utils along with all their dependencies
+sudo apt install ldap-utils slapd -q -y
+
+
+
+# saves the hashed password retunred by slappasswd
 PASSHASH=$(slappasswd -s rammy)
+
+# writes the contents of users.ldif file 
 cat <<EOF > /local/repository/users.ldif
 dn: uid=student,ou=People,dc=clemson,dc=cloudlab,dc=us
 objectClass: inetOrgPerson
@@ -60,6 +37,10 @@ loginShell: /bin/dash
 homeDirectory: /home/student
 EOF
 
+# sets the firewall rule to allow ldap service
 sudo ufw allow ldap
+
 ldapadd -f /local/repository/basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
+
+#populdate "student" user info from users.ldif
 ldapadd -f /local/repository/users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
