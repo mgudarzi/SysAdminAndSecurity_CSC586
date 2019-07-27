@@ -18,11 +18,14 @@ sudo apt update
 # ldap_auth_config  ldap_auth_config/ldapns/base-dn string dc=clemson,dc=cloudlab,dc=us
 # EOF
 
-export DEBIAN_FRONTEND=noninteractive
+# export DEBIAN_FRONTEND=noninteractive
+sudo apt-get install -y debconf-utils
+sudo apt-get install -y aptitude
 
 cat /local/repository/ldap-auth-config.debsetting | sudo debconf-set-selections
+sudo DEBIAN_FRONTEND=noninteractive aptitude install -y -q ldap-auth-client
 # sudo apt install -y libnss-ldap libpam-ldap ldap-utils
-sudo apt install ldap-auth-config ldap-utils -y
+# sudo apt install ldap-auth-config ldap-utils -y
 
 sudo sed -i '/passwd:/ s/$/ ldap/' /etc/nsswitch.conf
 sudo sed -i '/group:/ s/$/ ldap/' /etc/nsswitch.conf
