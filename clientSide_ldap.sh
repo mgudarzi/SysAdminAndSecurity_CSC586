@@ -25,7 +25,7 @@ cat /users/mg920115/.ldapAutomate/ldap-auth-config.debsetting | sudo debconf-set
 sudo apt install -y libnss-ldap libpam-ldap ldap-utils
 
 sudo sed -i '/passwd:/ s/$/ ldap/' /etc/nsswitch.conf
-sudo sed -i '/group:/ s/$/ ldap/' /etc/cd nsswitch.conf
+sudo sed -i '/group:/ s/$/ ldap/' /etc/nsswitch.conf
 sudo sed -i '/# end of pam-auth-update config/ i session optional pam-mkhomedir.so  skel=/etc/skel  umsak=077' /etc/pam.d/common-session
 sudo sed -i 's/use_authtok//g' /etc/pam.d/common-password
 
