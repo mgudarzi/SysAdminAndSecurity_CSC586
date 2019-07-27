@@ -21,7 +21,8 @@ sudo apt update
 export DEBIAN_FRONTEND=noninteractive
 
 cat /local/repository/ldap-auth-config.debsetting | sudo debconf-set-selections
-sudo apt install -y libnss-ldap libpam-ldap ldap-utils
+# sudo apt install -y libnss-ldap libpam-ldap ldap-utils
+sudo apt install ldap-auth-config ldap-utils -y
 
 sudo sed -i '/passwd:/ s/$/ ldap/' /etc/nsswitch.conf
 sudo sed -i '/group:/ s/$/ ldap/' /etc/nsswitch.conf
