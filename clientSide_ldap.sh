@@ -26,7 +26,9 @@ cat /local/repository/ldap-auth-config.debsetting | sudo debconf-set-selections
 sudo DEBIAN_FRONTEND=noninteractive aptitude install -y -q ldap-auth-client
 # sudo apt install -y libnss-ldap libpam-ldap ldap-utils
 # sudo apt install ldap-auth-config ldap-utils -y
-
+sed -i 's/uri ldapi:\/\/\//uri ldap:\/\/192.168.1.1\//g' /etc/ldap.conf
+sed -i 's/base dc=example,dc=net/base dc=clemson,dc=cloudlab,dc=us/g' /etc/ldap.conf
+sed -i 's/rootbinddn cn=manager,dc=example,dc=net/rootbinddn cn=admin,dc=clemson,dc=cloudlab,dc=us/g' /etc/ldap.conf
 sudo sed -i '/passwd:/ s/$/ ldap/' /etc/nsswitch.conf
 sudo sed -i '/group:/ s/$/ ldap/' /etc/nsswitch.conf
 sudo sed -i '/# end of pam-auth-update config/ i session optional pam-mkhomedir.so  skel=/etc/skel  umsak=077' /etc/pam.d/common-session
