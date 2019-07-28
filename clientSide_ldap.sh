@@ -30,4 +30,4 @@ sudo chmod 600 /etc/ldap.secret
 getent passwd student
 
 #switches to "student" account
-sudo su - student
+# sudo su - student
