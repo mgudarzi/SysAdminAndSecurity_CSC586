@@ -46,4 +46,4 @@ sudo ufw allow ldap
 ldapadd -f /local/repository/basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w $ADMIN_PASSWORD
 
 #populdate "student" user info from users.ldif
-ldapadd -f /local/repository/users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin $ADMIN_PASSWORD
+ldapadd -f /local/repository/users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w $ADMIN_PASSWORD
