@@ -1,5 +1,8 @@
 #!/bin/bash
 
+ADMIN_PASSWORD="admin"
+USER_PASSWORD="rammy"
+
 #updates the system repo database
 sudo apt update
 
@@ -16,7 +19,7 @@ sudo apt install ldap-utils slapd -q -y
 
 
 # saves the hashed password retunred by slappasswd
-PASSHASH=$(slappasswd -s rammy)
+PASSHASH=$(slappasswd -s $USER_PASSWORD)
 
 # writes the contents of users.ldif file 
 cat <<EOF > /local/repository/users.ldif
@@ -40,7 +43,7 @@ EOF
 # sets the firewall rule to allow ldap service
 sudo ufw allow ldap
 
-ldapadd -f /local/repository/basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
+ldapadd -f /local/repository/basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w $ADMIN_PASSWORD
 
 #populdate "student" user info from users.ldif
-ldapadd -f /local/repository/users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin
+ldapadd -f /local/repository/users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w admin $ADMIN_PASSWORD
