@@ -5,7 +5,7 @@ if [[ $(uname -n | head -c 10) == "ldapserver" ]];then
   /local/repository/ldap_install.sh
   exit 0
 else
-  sleep 2m
+  #sleep 2m
   #chmod 755 /local/repository/clientSide_ldap.sh
   /local/repository/clientSide_ldap.sh
   exit 0
