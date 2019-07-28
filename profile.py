@@ -30,7 +30,7 @@ for i in range(2):
   link.addInterface(iface)
   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ldap_install_combined.sh"))
   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ldap_install.sh"))
-  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/clinetSide_ldap.sh"))
+  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/clientSide_ldap.sh"))
   node.addService(pg.Execute(shell="sh", command="/local/repository/ldap_install_combined.sh"))
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
