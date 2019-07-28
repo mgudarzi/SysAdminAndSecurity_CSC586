@@ -21,7 +21,10 @@ sudo sed -i '/passwd:/ s/$/ ldap/' /etc/nsswitch.conf
 sudo sed -i '/group:/ s/$/ ldap/' /etc/nsswitch.conf
 sudo sed -i '/# end of pam-auth-update config/ i session optional pam-mkhomedir.so  skel=/etc/skel  umsak=077' /etc/pam.d/common-session
 sudo sed -i 's/use_authtok//g' /etc/pam.d/common-password
-sudo echo $ADMIN_PASSWORD >/etc/ldap.secret
+# sudo bash <<EOF
+# echo $ADMIN_PASSWORD > /etc/ldap.secret
+# EOF
+#echo $ADMIN_PASSWORD > /etc/ldap.secret
 sudo chmod 600 /etc/ldap.secret
 
 #fetches and prints details for a particular user
