@@ -14,7 +14,8 @@ else
     
     sudo bash<<EOF
     echo "/nfs/home 192.168.1.3(rw,sync,no_root_squash,no_subtree_check)" > /etc/exports
-    EOF
+EOF
+    
     
     sudo systemctl restart nfs-kernel-server
     exit 0
