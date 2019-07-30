@@ -32,10 +32,10 @@ for i in range(3):
   iface.component_id = "eth1"
   iface.addAddress(pg.IPv4Address(prefixForIP + str(i + 1), "255.255.255.0"))
   link.addInterface(iface)  
-  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ldap_install_combined.sh"))
-  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ldap_install.sh"))
-  node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/clientSide_ldap.sh"))
-  node.addService(pg.Execute(shell="sh", command="/local/repository/ldap_install_combined.sh"))
+#   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ldap_install_combined.sh"))
+#   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/ldap_install.sh"))
+#   node.addService(pg.Execute(shell="sh", command="sudo chmod 755 /local/repository/clientSide_ldap.sh"))
+#   node.addService(pg.Execute(shell="sh", command="/local/repository/ldap_install_combined.sh"))
   
 # Print the RSpec to the enclosing page.
 pc.printRequestRSpec(request)
