@@ -1,7 +1,6 @@
 
 ldap_auth_config        ldap_auth_config/bindpw password admin
 ldap_auth_config        ldap_auth_config/rootbindpw password admin
-ldap-auth-config        ldap-auth-config/binddn string  dc=clemson,dc=cloudlab,dc=us
 ldap-auth-config        ldap-auth-config/dbrootlogin    boolean true
 ldap-auth-config        ldap-auth-config/pam_password   select  md5
 ldap-auth-config        ldap-auth-config/move-to-debconf        boolean true
