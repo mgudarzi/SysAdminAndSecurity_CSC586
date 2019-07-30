@@ -1,3 +1,5 @@
 # CSC586
+# Assignment #2
 
-Programmatic deployment of infrastructures in CloudLab
+Programmatic deployment of LDAP server and LDAP client
+
