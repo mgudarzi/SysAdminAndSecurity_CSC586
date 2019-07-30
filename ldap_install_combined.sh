@@ -17,12 +17,13 @@ else
     EOF
     
     sudo systemctl restart nfs-kernel-server
+    exit 0
     
   else
-  
     sudo apt-get install -y nfs-common
     sudo mkdir -p /nfs/home
     sudo mount 192.168.1.2:/nfs/home /nfs/home
-
+    exit 0
+  fi
   exit 0
 fi
