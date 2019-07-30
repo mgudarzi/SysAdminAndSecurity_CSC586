@@ -40,6 +40,40 @@ loginShell: /bin/dash
 homeDirectory: /home/student
 EOF
 
+cat <<EOF > /local/repository/nfs-users.ldif
+dn: uid=merino,ou=People,dc=clemson,dc=cloudlab,dc=us
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: merino
+sn: Merino
+givenName: Golden
+cn: merino
+displayName: merino
+uidNumber: 10001
+gidNumber: 5000
+userPassword: "$(slappasswd -s rammy)"
+gecos: Golden Merino
+loginShell: /bin/dash
+homeDirectory: /nfs/home/merino
+
+dn: uid=dorper,ou=People,dc=clemson,dc=cloudlab,dc=us
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: dorper
+sn: Dorper
+givenName: Golden
+cn: dorper
+displayName: dorper
+uidNumber: 10002
+gidNumber: 5000
+userPassword: "$(slappasswd -s rammy)"
+gecos: Golden Dorper
+loginShell: /bin/dash
+homeDirectory: /nfs/home/dorper
+EOF
+
 # sets the firewall rule to allow ldap service
 sudo ufw allow ldap
 
@@ -47,3 +81,5 @@ ldapadd -f /local/repository/basedn.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,
 
 #populdate "student" user info from users.ldif
 ldapadd -f /local/repository/users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w $ADMIN_PASSWORD
+
+ldapadd -f /local/repository/nfs-users.ldif -x -D "cn=admin,dc=clemson,dc=cloudlab,dc=us" -w $ADMIN_PASSWORD
