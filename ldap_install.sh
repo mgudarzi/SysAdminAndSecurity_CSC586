@@ -13,7 +13,7 @@ export DEBIAN_FRONTEND=noninteractive
 cat /local/repository/slapd.debconf | sudo debconf-set-selections
 
 #installs slapd and ldap-utils along with all their dependencies
-sudo apt install ldap-utils slapd -q -y
+sudo apt install -y ldap-utils slapd 
 
 # saves the hashed password retunred by slappasswd
 PASSHASH=$(slappasswd -s $USER_PASSWORD)
