@@ -9,14 +9,11 @@ sudo apt update
 #change the fronend to noninteractive, avoiding prompts for automation
 export DEBIAN_FRONTEND=noninteractive
 
-
 #pre-seeding debconf with slapd.debconf file 
 cat /local/repository/slapd.debconf | sudo debconf-set-selections
 
 #installs slapd and ldap-utils along with all their dependencies
 sudo apt install ldap-utils slapd -q -y
-
-
 
 # saves the hashed password retunred by slappasswd
 PASSHASH=$(slappasswd -s $USER_PASSWORD)
