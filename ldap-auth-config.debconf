@@ -1,5 +1,5 @@
-ldap-auth-config        ldap-auth-config/rootbindpw     password password
-ldap-auth-config        ldap-auth-config/bindpw password password
+ldap-auth-config        ldap-auth-config/rootbindpw     password admin
+ldap-auth-config        ldap-auth-config/bindpw password admin
 ldap-auth-config        ldap-auth-config/binddn string  cn=admin,dc=clemson,dc=cloudlab,dc=us
 ldap-auth-config        ldap-auth-config/override       boolean true
 ldap-auth-config        ldap-auth-config/pam_password   select  md5
