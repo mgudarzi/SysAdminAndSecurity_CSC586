@@ -11,7 +11,7 @@ export DEBIAN_FRONTEND=noninteractive
 cat /local/repository/ldap-auth-config.debconf | sudo debconf-set-selections
 
 #installs libnss-ldap libpam-ldap ldap-utils along with all their dependencies
-sudo apt install -y libnss-ldap -y libpam-ldap ldap-utils
+sudo apt install -y libnss-ldap libpam-ldap ldap-utils
 
 #changes to ldap.conf, ldap.secret, nsswitch.conf, common-session, common-password
 
