@@ -8,7 +8,7 @@ sudo apt update
 export DEBIAN_FRONTEND=noninteractive
 
 #pre-seeding debconf with ldap_auth_conifg.debconf file 
-cat/local/repository/ldap-auth-config.debconf | sudo debconf-set-selections
+cat /local/repository/ldap-auth-config.debconf | sudo debconf-set-selections
 
 #installs libnss-ldap libpam-ldap ldap-utils along with all their dependencies
 sudo apt install -y libnss-ldap -y libpam-ldap ldap-utils
