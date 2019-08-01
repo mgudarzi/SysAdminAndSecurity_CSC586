@@ -8,10 +8,24 @@ sudo apt update
 export DEBIAN_FRONTEND=noninteractive
 
 #pre-seeding debconf with ldap_auth_conifg.debconf file 
-cat /local/repository/ldap-auth-config.debconf | sudo debconf-set-selections
+echo -e " 
+ldap-auth-config        ldap-auth-config/rootbindpw     password password
+ldap-auth-config        ldap-auth-config/bindpw password password
+ldap-auth-config        ldap-auth-config/binddn string  cn=admin,dc=clemson,dc=cloudlab,dc=us
+ldap-auth-config        ldap-auth-config/override       boolean true
+ldap-auth-config        ldap-auth-config/pam_password   select  md5
+ldap-auth-config        ldap-auth-config/dblogin        boolean false
+libpam-runtime          libpam-runtime/profiles multiselect     unix, ldap, systemd, capability
+ldap-auth-config        ldap-auth-config/ldapns/base-dn string  dc=clemson,dc=cloudlab,dc=us
+ldap-auth-config        ldap-auth-config/dbrootlogin    boolean true
+ldap-auth-config        ldap-auth-config/ldapns/ldap_version    select  3
+ldap-auth-config        ldap-auth-config/rootbinddn     string  cn=admin,dc=clemson,dc=cloudlab,dc=us
+ldap-auth-config        ldap-auth-config/ldapns/ldap-server     string  ldap://192.168.1.1
+ldap-auth-config        ldap-auth-config/move-to-debconf        boolean true
+" | sudo debconf-set-selections
 
 #installs libnss-ldap libpam-ldap ldap-utils along with all their dependencies
-sudo apt install -y -q libnss-ldap -y libpam-ldap ldap-utils
+sudo apt install -y libnss-ldap -y libpam-ldap ldap-utils
 
 #changes to ldap.conf, ldap.secret, nsswitch.conf, common-session, common-password
 
